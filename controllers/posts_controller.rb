@@ -9,26 +9,26 @@ class PostsController < Sinatra::Base
     register Sinatra::Reloader
   end
 
-  $posts = [{
+  $phones = [{
     	 id: 0,
-    	 title: "Post 1",
-    	 body: "This is the first post"
+    	 title: "iPhone",
+    	 body: "This is the iPhone"
     },
     {
         id: 1,
-        title: "Post 2",
-        body: "This is the second post"
+        title: "Samsung",
+        body: "This is the Samsung"
     },
     {
         id: 2,
-        title: "Post 3",
-        body: "This is the third post"
+        title: "HuaWei",
+        body: "This is the HuaWei"
     }];
 
   # INDEX
   get "/" do
     @title = "Blog Posts"
-    @posts = $posts
+    @phone = $phones
     erb :"posts/index"
   end
 
@@ -40,7 +40,7 @@ class PostsController < Sinatra::Base
   # SHOW
   get "/:id" do
     id = params[:id].to_i
-    @post = $posts[id]
+    @phone = $phones[id]
 
     erb :"posts/show"
   end
@@ -52,8 +52,8 @@ class PostsController < Sinatra::Base
 
   # EDIT
   get "/:id/edit" do
-    id = params[:id]
-    "This is the edit route for #{id}"
+    id = params[:id].to_i
+    erb :"posts/edit"
   end
 
   # UPDATE
