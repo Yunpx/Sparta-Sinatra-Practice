@@ -34,7 +34,7 @@ class PostsController < Sinatra::Base
 
   # NEW
   get "/new" do
-    "This is the new route!"
+    erb :"posts/edit"
   end
 
   # SHOW
