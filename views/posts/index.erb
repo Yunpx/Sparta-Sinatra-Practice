@@ -1,0 +1,9 @@
+<h1>Welcome to my PhoneBase!</h1>
+<% @posts.each do |post| %>
+  <div class="">
+    <h1><%= post.title %></h1>
+    <p>ID number :<%= post.id %></p>
+    <p><%= post.body %></p>
+
+  </div>
+<% end %>
