@@ -9,63 +9,74 @@ class PostsController < Sinatra::Base
     register Sinatra::Reloader
   end
 
-  $phones = [{
-    	 id: 0,
-    	 title: "iPhone",
-    	 body: "This is the iPhone"
-    },
-    {
-        id: 1,
-        title: "Samsung",
-        body: "This is the Samsung"
-    },
-    {
-        id: 2,
-        title: "HuaWei",
-        body: "This is the HuaWei"
-    }];
-
   # INDEX
   get "/" do
     @title = "Blog Posts"
-    @phone = $phones
+    @posts = Post.all
     erb :"posts/index"
   end
 
   # NEW
   get "/new" do
-    erb :"posts/edit"
+    post = Post.new
+
+    @post = post
+    post.id =""
+    post.title =""
+    post.body=""
+
+    erb :"posts/new"
   end
 
   # SHOW
   get "/:id" do
     id = params[:id].to_i
-    @phone = $phones[id]
+    @post = Post.find(id)
 
     erb :"posts/show"
   end
 
   # CREATE
   post "/" do
-    "This is the create route!"
+    post = Post.new
+
+    post.title = params[:title]
+    post.body = params[:body]
+
+    post.save
+
+    redirect "/"
   end
 
   # EDIT
   get "/:id/edit" do
     id = params[:id].to_i
+    @post = Post.find(id)
     erb :"posts/edit"
   end
 
   # UPDATE
   put "/:id" do
-    id = params[:id]
-    "This is the update route for #{id}"
+    id = params[:id].to_i
+    post = Post.find(id)
+    post.title = params[:title]
+    post.body = params[:body]
+
+    post.save
+
+    redirect "/"
   end
 
   # DESTROY
   delete "/:id" do
-    id = params[:id]
-    "This is the delete route for #{id}"
+    # get the ID
+    id = params[:id].to_i
+
+    # delete the post from the database
+    Post.destroy(id)
+
+    # redirect back to the homepage
+    redirect "/"
   end
 
 end
